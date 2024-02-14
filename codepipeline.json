@@ -1,0 +1,64 @@
+{
+  "pipeline": {
+    "name": "MeineCodePipeline",
+    "roleArn": "arn:aws:iam::447746596892:role/CodePipelineServiceRole",
+    "artifactStore": {
+      "type": "S3",
+      "location": "superdupertolleeimer"
+    },
+    "stages": [
+      {
+        "name": "Source",
+        "actions": [
+          {
+            "name": "SourceAction",
+            "actionTypeId": {
+              "category": "Source",
+              "owner": "ThirdParty",
+              "provider": "GitHub",
+              "version": "1"
+            },
+            "configuration": {
+              "Owner": "quaquazzzzzz",
+              "Repo": "world_app",
+              "Branch": "main",
+              "OAuthToken": "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"
+            },
+            "outputArtifacts": [
+              {
+                "name": "SourceOutput"
+              }
+            ],
+            "runOrder": 1
+          }
+        ]
+      },
+      {
+        "name": "Deploy",
+        "actions": [
+          {
+            "name": "DeployAction",
+            "actionTypeId": {
+              "category": "Deploy",
+              "owner": "AWS",
+              "provider": "S3",
+              "version": "1"
+            },
+            "configuration": {
+              "BucketName": "superdupertolleeimer",
+              "Extract": "true"
+            },
+            "inputArtifacts": [
+              {
+                "name": "SourceOutput"
+              }
+            ],
+            "runOrder": 1
+          }
+        ]
+      }
+    ]
+  },
+  "tags": []
+}
+
